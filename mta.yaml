@@ -17,6 +17,7 @@ modules:
     parameters:
       instances: 1
       buildpack: nodejs_buildpack
+      memory: 256M
     build-parameters:
       builder: npm-ci
     provides:
@@ -25,12 +26,14 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: DSM-db
+      - name: DSM-auth
 
   - name: DSM-db-deployer
     type: hdb
     path: gen/db
     parameters:
       buildpack: nodejs_buildpack
+      memory: 100M
     requires:
       - name: DSM-db
 
@@ -40,3 +43,12 @@ resources:
     parameters:
       service: hana
       service-plan: hdi-shared
+  - name: DSM-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: DSM-SODLS-dev
+        tenant-mode: dedicated
