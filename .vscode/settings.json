@@ -11,6 +11,6 @@
   "SAP HANA SQLScript LSP.URL": "https://cf-ca10.cf.hana-tooling.ingress.orchestration.prod-ca10.hanacloud.ondemand.com/hrtt-service",
   "SAP HANA SQLScript LSP.XsAdvancedHrttServiceUrl": "",
   "SAP HANA Project Explorer.bind.confirm automatic undeployment": false,
-  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/DSM/db/src/DSM/Procedure",
+  "SAP HANA Database Artifacts.lastSelectedTargetPath": "/home/user/projects/DSM/db/src/DSM/Synonyms",
   "SAP HANA Project Explorer.bind.confirm existing service": false
 }
