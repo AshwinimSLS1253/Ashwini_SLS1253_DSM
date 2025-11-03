@@ -6,8 +6,8 @@ PROCEDURE "prCreateNotes"(
 	   NTSTM TIME,              -- NOtes Time
 	   NOTES NVARCHAR(5000),    -- Notes Description
 	   ISDEL NVARCHAR(1),       -- ISDEL
-	   NSBDT DATE,              -- Notes Submission DAte
-	OUT oNOTID BIGINT           -- Notes Out ID
+	   NSBDT DATE              -- Notes Submission DAte
+	-- OUT oNOTID BIGINT           -- Notes Out ID
 	
 )
    LANGUAGE SQLSCRIPT
@@ -21,20 +21,20 @@ DECLARE QUERY NVARCHAR(500);
 
 	IF NOTID = 0 THEN
 	
-		INSERT INTO "COBNB"."DSM_T_NOTES"(DSMID,NTSBY,NTSDT, NTSTM, NOTES, CRTBY, CRTDT, CRTTM,ISDEL,NSBDT) 
+		INSERT INTO "DSM_T_NOTES"(DSMID,NTSBY,NTSDT, NTSTM, NOTES, CRTBY, CRTDT, CRTTM,ISDEL,NSBDT) 
 		VALUES(DSMID,SESSION_CONTEXT('APPLICATIONUSER'), NTSDT,NTSTM,NOTES,SESSION_CONTEXT('APPLICATIONUSER'), CURRENT_DATE, CURRENT_TIME,ISDEL,NSBDT);
 	
-		-- Generate Sequene for Primary key column
-        SELECT '"_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#"' INTO SEQENCE FROM TABLE_COLUMNS WHERE 
-        (TABLE_NAME='DSM_T_NOTES' and Schema_name='COBNB') AND COLUMN_NAME='NOTID';
-        --Append sequence in Query
-        QUERY:='select '||SEQENCE||'.CURRVAL from DUMMY';
-        -- Execute Sequnce query
-        EXECUTE IMMEDIATE QUERY INTO oNOTID;
+		-- -- Generate Sequene for Primary key column
+        -- SELECT '"_SYS_SEQUENCE_'|| COLUMN_ID||'_#0_#"' INTO SEQENCE FROM TABLE_COLUMNS WHERE 
+        -- (TABLE_NAME='DSM_T_NOTES' ) AND COLUMN_NAME='NOTID';
+        -- --Append sequence in Query
+        -- QUERY:='select '||SEQENCE||'.CURRVAL from DUMMY';
+        -- -- Execute Sequnce query
+        -- EXECUTE IMMEDIATE QUERY INTO oNOTID;
 		
 	ELSE 
 	
-		UPDATE "COBNB"."DSM_T_NOTES"
+		UPDATE "DSM_T_NOTES"
 		SET	NTSDT=:NTSDT,
     		NTSTM =:NTSTM,
     		NOTES =:NOTES,
@@ -44,7 +44,7 @@ DECLARE QUERY NVARCHAR(500);
     		CHNTM = CURRENT_TIME ,
     		NSBDT=:NSBDT
 		WHERE NOTID =:NOTID AND ISDEL = '0';
-		oNOTID=:NOTID;
+		--oNOTID=:NOTID;
 		
 	END IF;
 	
